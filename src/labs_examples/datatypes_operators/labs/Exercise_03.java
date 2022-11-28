@@ -12,6 +12,14 @@ class ArithmeticOperators {
 
         // write your code below
 
+        int x = 4;
+        int y = 9;
+        int add = x + y;
+        int subtract = x - y;
+        int multiply = x * y;
+        int divide = y / x;
+        int modulo = y % x;
+
     }
 
 }

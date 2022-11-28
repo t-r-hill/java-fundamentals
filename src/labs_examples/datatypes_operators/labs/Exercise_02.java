@@ -25,5 +25,13 @@ public class Exercise_02 {
 
         // write code here
 
+        // declaring and assigning variables
+        double x = 10.5;
+        int y = (int) x;
+
+        // printing int to console
+
+        System.out.println("The double " + x + " cast as an int = " + y);
+
     }
 }

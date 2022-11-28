@@ -18,6 +18,18 @@ public class Exercise_01 {
 
         // write code here
 
+        // declaring and assigning variables
+        int x = 7;
+        double y = 3.14;
+        float z = 3.1f;
+        char c = 't';
+
+        // printing variables to console
+        System.out.println("int = " + x);
+        System.out.println("double= " + y);
+        System.out.println("float = " + z);
+        System.out.println("char = " + c);
+
     }
 }
 
