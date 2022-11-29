@@ -10,4 +10,18 @@ package labs_examples.arrays.labs;
 
 public class Exercise_04 {
 
+    public static void main(String[] args) {
+
+        int[][] odd_one = {
+                {1, 2, 3, 4},
+                {1, 2, 3},
+                {1, 2, 3, 4, 5, 6}};
+
+        for (int[] array : odd_one){
+            for (int i : array){
+                System.out.print(i + " ");
+            }
+            System.out.print("\n");
+        }
+    }
 }
