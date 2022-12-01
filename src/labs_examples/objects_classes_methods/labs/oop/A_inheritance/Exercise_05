@@ -1,7 +1,7 @@
 
 Without running the code below, please tell me what will print. Why?
 
-
+It will print "Parent called" \n "Child called" as the Child constructor will have the super() method called by default
 
 
 public class InheritanceTest

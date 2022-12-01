@@ -1,7 +1,8 @@
 
 Without running the code below, please tell me what it will print.
 
-
+It will print "Child called" as the doSomething method in the Child class will override the doSomething method
+from the parent class
 
 public class InheritanceTest
 {
