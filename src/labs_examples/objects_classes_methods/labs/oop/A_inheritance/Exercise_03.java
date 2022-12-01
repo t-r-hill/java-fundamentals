@@ -4,7 +4,8 @@ package labs_examples.objects_classes_methods.labs.oop.A_inheritance;
  * Why does the output print in the order it does?
  *
  * You answer:
- *
+ * The compiler by default will add super() at the beginning of the constructors
+ * so the constructor of the parent class is called first
  */
 
 class A_1 {
