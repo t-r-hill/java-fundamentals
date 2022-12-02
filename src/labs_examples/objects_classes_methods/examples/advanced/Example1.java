@@ -15,6 +15,10 @@ class MyClass {
         alpha--;
         this.alpha = alpha;
     }
+
+    public int getAlpha(){
+        return this.alpha;
+    }
 }
 
 class AccessDemo {
@@ -24,5 +28,7 @@ class AccessDemo {
         int xyz = 10;
         ob.setAlpha(xyz);
         //xyz still 10
+        System.out.println(ob.getAlpha());
+        System.out.println(xyz);
     }
 }
