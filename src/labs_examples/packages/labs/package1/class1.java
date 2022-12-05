@@ -8,8 +8,8 @@ public class class1 {
         method1();
         method2();
         method3();
-        class2.method1();
-        class2.method2();
+        // class2.method1();
+        // class2.method2();
         class2.method3();
 
 
