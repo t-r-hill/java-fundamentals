@@ -24,10 +24,16 @@ public class BlackJackController {
         do {
 
             // Take betting from player
-            System.out.println("Let's play!");
-            System.out.print("How much would you like to bet? ");
-            int bet = scanner.nextInt();
-            scanner.nextLine();
+            boolean validBet;
+            int bet;
+            do {
+                System.out.println("Let's play!");
+                System.out.print("How much would you like to bet? ");
+                bet = scanner.nextInt();
+                scanner.nextLine();
+                validBet = (bet < player1.getPotValue() & bet > 0);
+            } while (!validBet);
+
             player1.setBetAmount(bet);
 
             // Load a new deck, clear hands and deal two cards to each player
@@ -51,10 +57,10 @@ public class BlackJackController {
                 dealAgain = scanner.nextLine();
             }
             while ((player2.computerAI() & !player2.getHand().isBust())) {
-                    myDeck.deal(player2);
-                    System.out.println(player2.getName() + " took another card");
-                    player2.showHandAndScore();
-                }
+                myDeck.deal(player2);
+                System.out.println(player2.getName() + " took another card");
+                player2.showHandAndScore();
+            }
 
 
             // Show final hands and assign winner. Allocate betting winnings/losses
