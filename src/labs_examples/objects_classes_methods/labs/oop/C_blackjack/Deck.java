@@ -9,6 +9,7 @@ public class Deck {
     int numCards = 52;
     Card[] cards;
     ArrayList<Integer> usedCards;
+    static int numDecksLoaded;
 
     void newDeck(){
         this.cards = new Card[this.numCards];
@@ -20,6 +21,7 @@ public class Deck {
                  i++;
             }
         }
+        numDecksLoaded++;
     }
 
     void deal(Player player){
