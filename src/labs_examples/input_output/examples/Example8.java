@@ -7,7 +7,7 @@ package labs_examples.input_output.examples;
 
 import java.io.*;
 
-class RWData {
+class aRWData {
     public static void main(String args[])
     {
         int i = 10;
