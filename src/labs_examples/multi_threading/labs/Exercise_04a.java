@@ -7,45 +7,43 @@ package labs_examples.multi_threading.labs;
  *      working as expected
  */
 
-class Exercise_04{
+class Exercise_04a{
     public static void main(String[] args) {
-        Incrementer inc = new Incrementer();
-        SyncRunnableThread myRunnableThread = new SyncRunnableThread("My Runnable Thread", inc);
-        SyncRunnableThread myRunnableThread2 = new SyncRunnableThread(inc);
+        Incrementera inc = new Incrementera();
+        SyncRunnableThreada myRunnableThread = new SyncRunnableThreada("My Runnable Thread", inc);
+        SyncRunnableThreada myRunnableThread2 = new SyncRunnableThreada(inc);
         Thread myThread = new Thread(myRunnableThread2, "My Runnable Thread 2");
         myThread.start();
     }
 }
 
-class SyncRunnableThread implements Runnable{
+class SyncRunnableThreada implements Runnable{
     Thread thread;
-    Incrementer incrementer;
+    Incrementera incrementer;
 
-    SyncRunnableThread(String name, Incrementer obj){
+    SyncRunnableThreada(String name, Incrementera obj){
         thread = new Thread(this, name);
         incrementer = obj;
         thread.start();
 
     }
 
-    SyncRunnableThread(Incrementer obj){
+    SyncRunnableThreada(Incrementera obj){
         incrementer = obj;
     }
 
     @Override
     public void run(){
         System.out.println("Starting " + Thread.currentThread().getName());
-        synchronized (incrementer){
             incrementer.increment();
-        }
         System.out.println("Finishing " + Thread.currentThread().getName());
     }
 }
 
-class Incrementer{
+class Incrementera{
     int total = 0;
 
-    public void increment(){
+    public synchronized void increment(){
         System.out.println("Beginning increment. Total = " + total);
         try{
             for (int i =0; i < 5; i++) {
