@@ -8,3 +8,25 @@ package labs_examples.enumerations.labs;
  *      of this enum from a seperate class.
  */
 
+class Exercise_01{
+
+    public static void main(String[] args) {
+        System.out.println(FamilyMember.TOM.getFullName());
+    }
+}
+
+enum FamilyMember{
+    TOM("Thomas Hill"),
+    LOUISE("Louise Pegg"),
+    FELIX("Felix Hill");
+
+    private String fullName;
+
+    FamilyMember(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+}
