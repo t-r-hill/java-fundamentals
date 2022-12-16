@@ -17,7 +17,7 @@ public class CustomBinarySearchTree {
      */
     public static void main(String[] args) {
         // create the
-        CustomBinarySearchTree bst = new CustomBinarySearchTree(3, 7, 1, 5, 2, 4, 6);
+        CustomBinarySearchTree bst = new CustomBinarySearchTree(3, 7, 1, 5, 2, 4, 6, 8, 9, 10);
 
         System.out.println("Printing Tree contents recursively - inOrder");
         bst.printInorderRecursive(bst.root);
