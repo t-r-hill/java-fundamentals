@@ -5,11 +5,46 @@
 *   Now that you have your air travel database all set up and populated, please demonstrate how to:
 *
 *       1.) Query all flights on a specific day
+        SELECT *
+        FROM air_travel.flights
+        WHERE DATE(datetime) = "2022-01-01";
 *       2.) Query all flights between two specific cities on a specific day
+        SELECT *
+        FROM flights f
+        JOIN destinations df
+        ON f.destination_from_id = df.id
+        JOIN destinations dt
+        ON f.destination_to_id = dt.id
+        WHERE DATE(f.datetime) = "2022-01-01"
+        AND df.country = "UK"
+        AND dt.country = "Japan";
 *       3.) Query all passengers on a specific flight between two specific cities today
+        SELECT p.*
+        FROM passengers p
+        JOIN tickets t
+        ON p.id = t.passenger_id
+        JOIN flights f
+        ON t.flight_id = f.id
+        JOIN destinations df
+        ON f.destination_from_id = df.id
+        JOIN destinations dt
+        ON f.destination_to_id = dt.id
+        WHERE f.id = 6
+        AND df.city = "Sydney"
+        AND dt.city = "Sydney";
 *       4.) Query the flight information for a specific passenger on a specific flight
 *       5.) Query the passenger information for a specific user on a specific flight yesterday
 *       6.) Query the number of flights between two specific cities this week, month, and year
+        SELECT count(f.id)
+        FROM flights f
+        JOIN destinations df
+        ON f.destination_from_id = df.id
+        JOIN destinations dt
+        ON f.destination_to_id = dt.id
+        WHERE df.country = "UK"
+        AND dt.country = "Australia"
+        AND f.datetime >= "2022-01-01"
+        AND f.datetime < "2023-01-01";
 *       7.) Query the number of passengers that travelled between two specific cities today, this week, month and year
 *       8.) Insert records for new flights between airports
 *       9.) Insert records for new tickets and passengers on specific flights
