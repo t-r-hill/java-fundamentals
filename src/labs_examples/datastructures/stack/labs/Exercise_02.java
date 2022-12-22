@@ -1,5 +1,7 @@
 package labs_examples.datastructures.stack.labs;
 
+import java.util.Arrays;
+
 /**
  *      Stacks - Exercise_02
  *
@@ -18,3 +20,114 @@ package labs_examples.datastructures.stack.labs;
  *      TIP: To initialize a new array of a Generic type you can use this:
  *           T[] data = (T[]) new Object[10];
  */
+
+class Exercise_02{
+
+    public static void main(String[] args) {
+        CustomStack<Integer> stack = new CustomStack<>();
+
+        for (int i = 0; i < 6; i++){
+            stack.put(i);
+        }
+
+        System.out.println(stack.toString(true));
+        System.out.println(stack.toString(false));
+
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+
+        System.out.println(stack.toString(true));
+        System.out.println(stack.toString(false));
+
+        for (int i = 6; i < 10; i++){
+            stack.put(i);
+        }
+
+        System.out.println(stack.toString(true));
+        System.out.println(stack.toString(false));
+    }
+}
+
+class CustomStack<T>{
+    int top;
+    T[] vals;
+    int size;
+
+    CustomStack(){
+        this.vals = (T[]) new Object[10];
+        this.top = 0;
+        this.size = 0;
+    }
+
+    public void put(T val){
+        if (vals[0] == null){
+            vals[0] = val;
+            size++;
+        } else {
+            vals[++top] = val;
+            size++;
+        }
+
+        if (size > vals.length * 0.75){
+            resize(true);
+        }
+    }
+
+    public T pop(){
+        if (vals[0] == null){
+            throw new EmptyStackException();
+        }
+
+        T output = vals[top];
+        vals[top] = null;
+
+        top--;
+        size--;
+
+        if (size < vals.length * 0.25){
+            resize(false);
+        }
+
+        return output;
+    }
+
+    public T peekFirst(){
+        return vals[top];
+    }
+
+    public T peekLast(){
+        return vals[0];
+    }
+
+    public void resize(boolean up){
+        T[] oldVals = vals;
+
+        if (up){
+            vals = (T[]) new Object[vals.length * 2];
+            for (int i = 0; i < size; i++){
+                vals[i] = oldVals[i];
+            }
+        } else {
+            vals = (T[]) new Object[vals.length / 2];
+            for (int i = 0; i < size; i++){
+                vals[i] = oldVals[i];
+            }
+        }
+    }
+
+    public String toString(boolean topFirst){
+        String output = "";
+        if (topFirst){
+            for (int i = 0; i < size; i++){
+                output += vals[i] + " ";
+            }
+        } else {
+            for (int i = 0; i < size; i++){
+                output += vals[size - i - 1] + " ";
+            }
+        }
+        return output;
+    }
+}
+
+class EmptyStackException extends NullPointerException{};

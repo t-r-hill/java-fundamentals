@@ -1,17 +1,15 @@
-package labs_examples.datastructures.hashmap.examples;
-
-import labs_examples.datastructures.linkedlist.examples.CustomLinkedList;
+package labs_examples.datastructures.hashmap.labs;
 
 /**
  * Created by Kevin Graham - https://codingnomads.co
  */
-public class CustomHashMap<K, V> {
+public class CustomHashMap2<K, V> {
 
     // create the underlying Entry array with the initial size of 10
-    private Entry<K, V>[] table = new Entry[10];
+    private Entry<K, V>[] entryArray = new Entry[10];
 
     // track the current number of elements in the hashmap
-    private int numElements = 0;
+    private int numEntries = 0;
 
 
     /**
@@ -20,9 +18,9 @@ public class CustomHashMap<K, V> {
      * @param key to be hashed
      * @return a table index
      */
-    private int hash(K key) {
+    private int modHash(K key) {
         // get the hashCode for the key and mod that hashCode by the length of the array
-        int index = Math.abs(key.hashCode() % table.length);
+        int index = Math.abs(key.hashCode() % entryArray.length);
         // the result will be the index where we can find and/or place entries
         return index;
     }
@@ -33,53 +31,50 @@ public class CustomHashMap<K, V> {
      * @param key   a key Object
      * @param value a value Object
      */
-    public void put(K key, V value) {
+    public void putEntry(K key, V value) {
         // call the hash() method to get the index to place the element
-        int index = hash(key);
+        int index = modHash(key);
 
         // create the Entry object containing the key and value that we will store in the underlying array
         Entry<K,V> entry = new Entry(key, value);
 
         // no element at the given index, means no collision
         // go ahead and simply add the value to the array
-        if (table[index] == null) {
+        if (entryArray[index] == null) {
 
-            table[index] = entry;
-            numElements++;
+            entryArray[index] = entry;
+            numEntries++;
         }
         // otherwise, there was a collision
         // we need iterate through the linked list at that index
         else {
-            // get the first Entry (in the linked list) at the given index
-            Entry<K, V> p = table[index];
+            // get the first Entry (in the linked list) at the given index and assign to variable
+            Entry<K, V> p = entryArray[index];
 
-            // traverse the linked list
-            while (p.next != null) {
-                p = p.next;
-            }
+            // replace the Entry wihtin the array
+            entryArray[index] = entry;
 
-            // after we exit the while loop above, we'll be at the end of the linked list
-            // this is where we can add the new Entry
-            p.next = entry;
-            numElements++;
+            // assign the previous entry as next of the new entry
+            entry.next = p;
+            numEntries++;
         }
 
         // check for resize
-        if (numElements > table.length * .75) {
+        if (numEntries > entryArray.length * .5) {
             // the resize method will create a bigger underlying array and
             // add all values in the existing array to the new, larger array
-            resize();
+            resizeMap();
         }
     }
 
     /**
      * Resizes the underlying array to double its previous size and copies the old values into it
      */
-    private void resize() {
+    private void resizeMap() {
         // make a copy of the existing table and call it "old"
-        Entry<K, V>[] old = table;
+        Entry<K, V>[] old = entryArray;
         // create a new Entry[] that is twice the size of the old one
-        table = new Entry[old.length * 2];
+        entryArray = new Entry[old.length * 3];
 
         // iterate over the length of the old array
         for (int i = 0; i < old.length; i++) {
@@ -87,14 +82,14 @@ public class CustomHashMap<K, V> {
                 // get the Entry at the index of "i" from the "old" table
                 Entry entry = old[i];
                 // call the put() method passing the key and value to add this element to the new table
-                put((K) entry.getKey(), (V) entry.getValue());
+                putEntry((K) entry.getKey(), (V) entry.getValue());
 
                 // check to see if this entry is actually the start of a linked list
                 while (entry.next != null) {
                     // if it is, traverse to the next node
                     entry = entry.next;
                     // and call the put() method to add this element
-                    put((K) entry.getKey(), (V) entry.getValue());
+                    putEntry((K) entry.getKey(), (V) entry.getValue());
                     // loop
                 }
             } catch (Exception e) {
@@ -103,29 +98,52 @@ public class CustomHashMap<K, V> {
         }
     }
 
+    public void replaceEntry(K key, V newValue){
+        if (getEntry(key) == null){
+            return;
+        }
+
+        int index = modHash(key);
+
+        Entry<K,V> entry = entryArray[index];
+
+        if (entry.getKey().equals(key)){
+            entry.setValue(newValue);
+            return;
+        } else{
+            while (entry.next != null){
+                if (entry.getKey().equals(key)){
+                    entry.setValue(newValue);
+                    return;
+                } entry = entry.next;
+            }
+        }
+
+    }
+
     /**
      * Removes the pair at the given key from the hashmap
      *
      * @param key of the pair to be removed
      */
-    public void remove(K key) {
+    public void removeEntry(K key) {
 
         // ensure key exists by calling the get() method
-        if (get(key) == null) {
+        if (getEntry(key) == null) {
             // if the get() method returns null, there's nothing to delete
             return;
         }
 
         // otherwise, get the index for the key by calling the hash() method
-        int index = hash(key);
+        int index = modHash(key);
 
         // get the Entry at the index
-        Entry<K, V> entry = table[index];
+        Entry<K, V> entry = entryArray[index];
 
         // if this entry has the matching key, remove the element at this index
         if (entry.getKey().equals(key)){
-            table[index] = null;
-            numElements--;
+            entryArray[index] = null;
+            numEntries--;
             return;
         }
 
@@ -146,13 +164,13 @@ public class CustomHashMap<K, V> {
         // a -> c
         if(entry.next.next != null){
             entry.next = entry.next.next;
-            numElements--;
+            numEntries--;
             return;
         }
         // otherwise, entry.next is the end of the list so we can just chop it off
         else {
             entry.next = null;
-            numElements--;
+            numEntries--;
             return;
         }
     }
@@ -163,17 +181,18 @@ public class CustomHashMap<K, V> {
      * @param key to search for
      * @return value of the given key
      */
-    public V get(K key) {
+    public V getEntry(K key) {
         // call the hash() method to get the index for the key
-        int index = hash(key);
+        int index = modHash(key);
 
         // nothing at key - return null
-        if (table[index] == null) {
+        if (entryArray[index] == null) {
+            System.out.println("The key - " + key + " does not exist");
             return null;
         }
 
         // otherwise, get the Entry at the index
-        Entry<K, V> entry = table[index];
+        Entry<K, V> entry = entryArray[index];
 
         // if the key of the current entry is not the key we're looking for
         // that means we're looking at a linked list and we need to traverse it
@@ -199,7 +218,7 @@ public class CustomHashMap<K, V> {
      * @return int storage size
      */
     public int getStorage() {
-        return table.length;
+        return entryArray.length;
     }
 
 }
