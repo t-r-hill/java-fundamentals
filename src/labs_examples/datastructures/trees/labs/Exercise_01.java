@@ -152,7 +152,6 @@ class BST<T>{
     }
 
     public void printPreOrder(Node<T> root){
-        String output = "";
         Node<T> node = root;
         if (node == null){
             return;
