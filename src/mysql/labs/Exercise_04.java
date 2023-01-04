@@ -44,6 +44,26 @@ public class Exercise_04 {
 
 
          */
+        ReadData readData = new ReadData("air_travel");
+
+        String passenger7 = readData.readPassenger(7);
+        String flight4 = readData.readFlight(4);
+
+        System.out.println(passenger7);
+        System.out.println(flight4);
+
+        CreateUpdateData createUpdateData = new CreateUpdateData("air_travel");
+
+        createUpdateData.createFlight(1,1,2,"2023-01-01", 1111);
+        createUpdateData.createPassenger("Vitalik", "Buterin", "bigv@eth.com");
+
+        createUpdateData.updatePassenger(14, "Satoshi", "Nakamoto", "bigs@btc.com");
+        createUpdateData.updateFlight(15,1,1, 3,"2023-01-01", 1112);
+
+        DeleteData deleteData = new DeleteData("air_travel");
+
+        deleteData.deletePassenger(14);
+        deleteData.deleteFlight(16);
     }
 
 }
